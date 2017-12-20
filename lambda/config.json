@@ -1,0 +1,10 @@
+{
+  "dev": {
+    "EXCLUDE_DIR": "lambda/node_modules/{canvas/**,nan/**}",
+    "NODE_PATH": "/var/task/lambda_node_modules"
+  },
+  "local": {
+    "EXCLUDE_DIR": "lambda_node_modules",
+    "NODE_PATH": ""
+  }
+}

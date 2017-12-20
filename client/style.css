@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Libre+Franklin|Oswald|Rokkitt');
+body {
+  background: #242424;
+  color: white;
+  font-family: Libre Franklin;
+}
+canvas {
+  
+}
+canvas.hover {
+  cursor: pointer;
+}
+canvas.hover:hover {
+  cursor: pointer;
+}

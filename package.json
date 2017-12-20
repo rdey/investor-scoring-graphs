@@ -1,0 +1,121 @@
+{
+  "name": "community-scoring-graphs",
+  "version": "4.0.0",
+  "description": "",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "parcel client/index.html",
+    "build:docs": "parcel build client/index.html -d client/docs",
+    "start:dev": "npm run --prefix lambda start",
+    "sls:deploy": "serverless deploy",
+    "sls:logs": "serverless logs -f api -s dev -r eu-central-1",
+    "sls:invoke:dev": "node ./lambda/evalSlsLocalInvoke.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-eslint": "7.2.3",
+    "babel-plugin-styled-components": "^1.3.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb-base": "12.1.0",
+    "eslint-import-resolver-webpack": "0.8.3",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-jsx-a11y": "6.0.2",
+    "eslint-plugin-react": "^7.4.0",
+    "immutable": "^3.8.2",
+    "lodash": "^4.17.5",
+    "parcel-bundler": "^1.2.1",
+    "prettier": "^1.10.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "reselect": "^3.0.1",
+    "serverless": "^1.21.1",
+    "serverless-apigw-binary": "^0.4.0",
+    "serverless-api-cloudfront": "^0.9.3",
+    "styled-components": "^2.3.3"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "env": {
+      "browser": true,
+      "node": true,
+      "jest": true,
+      "es6": true
+    },
+    "plugins": [
+      "react",
+      "jsx-a11y"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "rules": {
+      "no-param-reassign": 0,
+      "function-paren-newline": 0,
+      "no-mixed-operators": 0,
+      "arrow-parens": [
+        "error",
+        "always"
+      ],
+      "arrow-body-style": [
+        2,
+        "as-needed"
+      ],
+      "class-methods-use-this": 0,
+      "comma-dangle": [
+        2,
+        "always-multiline"
+      ],
+      "import/imports-first": 0,
+      "import/newline-after-import": 0,
+      "import/no-dynamic-require": 0,
+      "import/no-extraneous-dependencies": 0,
+      "import/no-named-as-default": 0,
+      "import/no-unresolved": 2,
+      "import/no-webpack-loader-syntax": 0,
+      "import/prefer-default-export": 0,
+      "indent": [
+        2,
+        2,
+        {
+          "SwitchCase": 1
+        }
+      ],
+      "jsx-a11y/aria-props": 2,
+      "jsx-a11y/heading-has-content": 0,
+      "jsx-a11y/href-no-hash": 0,
+      "jsx-a11y/label-has-for": 2,
+      "jsx-a11y/mouse-events-have-key-events": 2,
+      "jsx-a11y/role-has-required-aria-props": 2,
+      "jsx-a11y/role-supports-aria-props": 2,
+      "max-len": 0,
+      "newline-per-chained-call": 0,
+      "no-confusing-arrow": 0,
+      "no-console": 1,
+      "no-use-before-define": 0,
+      "prefer-template": 2,
+      "react/forbid-prop-types": 0,
+      "react/jsx-first-prop-new-line": [
+        2,
+        "multiline"
+      ],
+      "react/jsx-filename-extension": 0,
+      "react/jsx-no-target-blank": 0,
+      "react/require-default-props": 0,
+      "react/require-extension": 0,
+      "react/self-closing-comp": 0,
+      "require-yield": 0
+    }
+  }
+}

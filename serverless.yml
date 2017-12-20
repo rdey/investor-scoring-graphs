@@ -1,0 +1,95 @@
+service: community-scoring-graphs
+
+plugins:
+  - serverless-apigw-binary
+  # - serverless-api-cloudfront
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  memorySize: 128
+  timeout: 10
+  stage: dev
+  region: eu-central-1
+  environment:
+    NODE_PATH: ${file(lambda/config.json):${self:provider.stage}.NODE_PATH}
+    SQL_HOST: ${file(lambda/.env.json):${self:provider.stage}.SQL_HOST}
+    SQL_USER: ${file(lambda/.env.json):${self:provider.stage}.SQL_USER}
+    SQL_DB: ${file(lambda/.env.json):${self:provider.stage}.SQL_DB}
+    SQL_PW: ${file(lambda/.env.json):${self:provider.stage}.SQL_PW}
+    SQL_CA: ${file(lambda/.env.json):${self:provider.stage}.SQL_CA}
+
+
+package:
+  exclude:
+    - ${file(lambda/config.json):${self:provider.stage}.EXCLUDE_DIR}
+    - dist
+    - client
+    - .cache
+
+custom:
+  apigwBinary:
+    types:
+      - '*/*'
+
+resources:
+  Resources:
+    ApiDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          Origins:
+          - Id: ApiGateway
+            DomainName:
+              Fn::Join:
+                - ""
+                - - Ref: ApiGatewayRestApi
+                  - ".execute-api."
+                  - Ref: AWS::Region
+                  - ".amazonaws.com"
+            CustomOriginConfig:
+              HTTPPort: '80'
+              HTTPSPort: '443'
+              OriginProtocolPolicy: https-only
+              OriginSSLProtocols: [ "TLSv1", "TLSv1.1", "TLSv1.2" ]
+            OriginPath: /${self:provider.stage}
+          Enabled: true
+          HttpVersion: http2
+          Comment: cdn for api gateway
+          PriceClass: PriceClass_All
+          DefaultCacheBehavior:
+            AllowedMethods:
+            - DELETE
+            - GET
+            - HEAD
+            - OPTIONS
+            - PATCH
+            - POST
+            - PUT
+            CachedMethods:
+            - HEAD
+            - GET
+            - OPTIONS
+            ForwardedValues:
+              QueryString: false
+              Headers: ["Origin", "Access-Control-Request-Headers", "Access-Control-Request-Method"]
+              Cookies:
+                Forward: none
+            MinTTL: '0'
+            DefaultTTL: '0'
+            TargetOriginId: ApiGateway
+            ViewerProtocolPolicy: redirect-to-https
+          CustomErrorResponses: []
+
+  Outputs:
+    ApiDistribution:
+      Value:
+        Fn::GetAtt: [ ApiDistribution, DomainName ]
+functions:
+  api:
+    handler: lambda/handler.express
+    events:
+      - http: ANY {proxy+}
+      - http: ANY /
+
+

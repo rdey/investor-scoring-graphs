@@ -1,0 +1,17 @@
+# package directories
+node_modules
+lambda/node_modules
+api/node_modules
+jspm_packages
+
+.cache
+
+# Serverless directories
+.serverless
+
+yarn-error.log
+dist
+
+lambda/.env.json
+
+lambda/testing_tmp
